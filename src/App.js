@@ -70,6 +70,13 @@ class App extends Component {
   }
 
   render() {
+    const buttonStyle = {
+      backgroundColor: 'white',
+      fontSize: '16px',
+      padding: '10px',
+      cursor: 'pointer',
+      border: '1px solid blue'
+    }
     let persons = (<p>No Elegant Person To Show</p>);
     if(this.state.showElegantPerson){
       persons = this.state.elegantPersons.map((person,index) => {
@@ -85,7 +92,7 @@ class App extends Component {
           <button type="button" onClick={this.changeHandler.bind(this,'MAxi !!!')}> I change stuff !!</button>
         </p>
         <p>
-          <button type="button" onClick={this.togglePersonHandler}>Toggler</button>
+          <button style={buttonStyle} type="button" onClick={this.togglePersonHandler}>Toggler</button>
         </p>
         <p>
           <button type="button" onClick={this.elegantToggleHandler}>Elegant Toggler</button>
