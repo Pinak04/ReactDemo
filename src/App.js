@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Radium, { StyleRoot } from 'radium';
 import './App.css';
 import Person from './Person/Person';
 
@@ -71,11 +72,16 @@ class App extends Component {
 
   render() {
     const buttonStyle = {
-      backgroundColor: 'white',
+      backgroundColor: 'red',
       fontSize: '16px',
       padding: '10px',
       cursor: 'pointer',
-      border: '1px solid blue'
+      border: '1px solid blue',
+      color: 'white',
+      ':hover':{
+        backgroundColor : 'salmon',
+        color: 'black'
+      }
     }
     let persons = (<p>No Elegant Person To Show</p>);
     if(this.state.showElegantPerson){
@@ -84,32 +90,48 @@ class App extends Component {
         changename={(event) => this.textChangeHandler(event,person.id)}
       />
       });
+      buttonStyle.backgroundColor = 'green';
+      buttonStyle.color = 'black';
+      buttonStyle[":hover"] = {
+        backgroundColor: 'lightgreen',
+        color: 'white'
+      }
     }
+    let classes = [];
+    if(this.state.elegantPersons.length >=2){
+      classes.push('bold');
+    }
+    if(this.state.elegantPersons.length >=1){
+      classes.push('red');
+    }
+    classes.join(' ');
     return (
-      <div className="App">
-        <p>It Works !! I am React</p>
-        <p>
-          <button type="button" onClick={this.changeHandler.bind(this,'MAxi !!!')}> I change stuff !!</button>
-        </p>
-        <p>
-          <button style={buttonStyle} type="button" onClick={this.togglePersonHandler}>Toggler</button>
-        </p>
-        <p>
-          <button type="button" onClick={this.elegantToggleHandler}>Elegant Toggler</button>
-        </p>
-        { (this.state.showPersons) ?
-          <div>
-            <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-            <Person name={this.state.persons[1].name} age={this.state.persons[1].age} />
-            <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
-          </div>
-          : 
-          <p>Click Toggler to Reveal</p>
-        }
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <p>It Works !! I am React</p>
+          <p>
+            <button type="button" className={classes} onClick={this.changeHandler.bind(this,'MAxi !!!')}> I change stuff !!</button>
+          </p>
+          <p>
+            <button type="button" onClick={this.togglePersonHandler}>Toggler</button>
+          </p>
+          <p>
+            <button style={buttonStyle} type="button" onClick={this.elegantToggleHandler} >Elegant Toggler</button>
+          </p>
+          { (this.state.showPersons) ?
+            <div>
+              <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
+              <Person name={this.state.persons[1].name} age={this.state.persons[1].age} />
+              <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
+            </div>
+            : 
+            <p>Click Toggler to Reveal</p>
+          }
+          {persons}
+        </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
